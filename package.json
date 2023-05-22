@@ -33,7 +33,8 @@
     "lint:fix": "eslint --cache --ext .ts,.js,.mjs,.cjs . --fix && prettier -c src test -w",
     "release": "pnpm test:res && pnpm build && standard-version && git push --follow-tags && pnpm publish --no-git-checks",
     "test:dev": "vitest dev",
-    "test:res": "pnpm lint && vitest run --coverage"
+    "test:res": "pnpm lint && vitest run --coverage",
+    "dev:vue3": "pnpm run --filter vite-vue3 dev"
   },
   "devDependencies": {
     "eslint": "^8.40.0",
