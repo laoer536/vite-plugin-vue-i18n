@@ -1,18 +1,27 @@
 import { createUnplugin } from 'unplugin'
 import type { Options } from './types'
 import { resolveOptions } from './options'
+import { generateInternationalizedFiles } from './core'
 
 const unplugin = createUnplugin<Options | undefined>((options = {}) => {
   const resolved = resolveOptions(options)
+  console.log(resolved)
   return {
     name: 'vite-plugin-vue-i18n',
-    // transformInclude(id) {
-    //     return id.endsWith('.vue')
-    // },
+    enforce: 'pre',
+    transformInclude(id) {
+      console.log(id)
+      return id.endsWith('.vue')
+    },
     // just like rollup transform
-    // transform(code) {
-    //     return code.replace(/<template>/, '<template><div>Injected</div>')
-    // },
+    transform(code, id) {
+      console.log('ssssss', id)
+      return code.replace(/[\u4e00-\u9fa5]+/g, (str) => {
+        console.log(str)
+        generateInternationalizedFiles(id, [str], ['zh'])
+        return str
+      })
+    },
   }
 })
 
